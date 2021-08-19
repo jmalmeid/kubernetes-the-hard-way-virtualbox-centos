@@ -2,13 +2,15 @@
 
 yum -y install epel-release
 
-yum remove firewalld
+yum -y remove firewalld
 yum install -y iptables-services
 systemctl enable iptables
 systemctl start iptables
  
 #iptables
 iptables -I INPUT -m state --state NEW -p udp -m multiport --dports 5404,5405 -j ACCEPT
+iptables -I INPUT -p udp -m state --state NEW -m udp --dport 53 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 53 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 5403 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 2224 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3121 -j ACCEPT
