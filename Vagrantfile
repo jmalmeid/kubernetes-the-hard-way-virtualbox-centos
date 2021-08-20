@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 1
-    vb.memory = 512
+    vb.memory = 1024
     vb.name = "vm"
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
       c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-haproxy.sh"
 
       c.vm.provider "virtualbox" do |vb|
-        vb.memory = "256"
+        vb.memory = "512"
       end
   end
 
@@ -52,6 +52,9 @@ Vagrant.configure("2") do |config|
 
         c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-routes.sh"
         c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-worker.sh"
+      c.vm.provider "virtualbox" do |vb|
+        vb.memory = "512"
+      end
     end
   end
 
