@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
   (0..2).each do |i|
     config.vm.define "controller-#{i}" do |node|
       node.vm.hostname = "controller-#{i}"
-      node.vm.network "private_network", ip: "192.168.100.1#{i}"
+      node.vm.network "public_network", ip: "192.168.100.1#{i}"
       node.vm.provision :hosts, :sync_hosts => true
       node.vm.provider "virtualbox" do |vb|
         vb.name = "controller-#{i}"
@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
   (0..2).each do |i|
     config.vm.define "worker-#{i}" do |node|
       node.vm.hostname = "worker-#{i}"
-      node.vm.network "private_network", ip: "192.168.100.2#{i}"
+      node.vm.network "public_network", ip: "192.168.100.2#{i}"
       node.vm.provision :hosts, :sync_hosts => true
       node.vm.provider "virtualbox" do |vb|
         vb.name = "worker-#{i}"
