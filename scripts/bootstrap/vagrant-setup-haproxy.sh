@@ -9,7 +9,7 @@ EOF
 
 yum -y install epel-release
 yum -y remove firewalld
-yum install -y iptables-services
+yum install -y iptables-services wget
 systemctl enable iptables
 systemctl start iptables
  

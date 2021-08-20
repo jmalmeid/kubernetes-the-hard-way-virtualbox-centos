@@ -1,7 +1,9 @@
 #!/bin/bash
+wget --timestamping https://github.com/coreos/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz
 
-wget -q --show-progress --https-only --timestamping \
-  "https://github.com/coreos/etcd/releases/download/v3.3.5/etcd-v3.3.5-linux-amd64.tar.gz"
+for instance in controller-0 controller-1 controller-2; do
+  vagrant upload etcd-v3.4.15-linux-amd64.tar.gz /home/vagrant/etcd-v3.4.15-linux-amd64.tar.gz ${instance}
+  vagrant ssh ${instance} -c "cd /home/vagrant && tar -xvf etcd-v3.4.15-linux-amd64.tar.gz && sudo mv etcd-v3.4.15-linux-amd64/etcd* /usr/local/bin/"
+done
 
-tar -xvf etcd-v3.3.5-linux-amd64.tar.gz
-sudo mv etcd-v3.3.5-linux-amd64/etcd* /usr/local/bin/
+rm -f etcd-v3.4.15-linux-amd64.tar.gz

@@ -39,10 +39,12 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 sudo rm -f /swapfile1
 
-yum -y install epel-release
+sudo yum -y install epel-release
 
-yum -y remove firewalld
-yum install -y iptables-services
+sudo yum -y remove firewalld
+sudo yum install -y iptables-services wget
+sudo yum -y install socat conntrack ipset
+
 systemctl enable iptables
 systemctl start iptables
  

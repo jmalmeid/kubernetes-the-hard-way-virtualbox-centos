@@ -1,29 +1,6 @@
 #!/bin/bash
 
-sudo mv kube-controller-manager.kubeconfig /var/lib/kubernetes/
-
-cat <<EOF | sudo tee /etc/systemd/system/kube-controller-manager.service
-[Unit]
-Description=Kubernetes Controller Manager
-Documentation=https://github.com/kubernetes/kubernetes
-
-[Service]
-ExecStart=/usr/local/bin/kube-controller-manager \\
-  --address=0.0.0.0 \\
-  --cluster-cidr=10.200.0.0/16 \\
-  --cluster-name=kubernetes \\
-  --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \\
-  --cluster-signing-key-file=/var/lib/kubernetes/ca-key.pem \\
-  --kubeconfig=/var/lib/kubernetes/kube-controller-manager.kubeconfig \\
-  --leader-elect=true \\
-  --root-ca-file=/var/lib/kubernetes/ca.pem \\
-  --service-account-private-key-file=/var/lib/kubernetes/service-account-key.pem \\
-  --service-cluster-ip-range=10.32.0.0/24 \\
-  --use-service-account-credentials=true \\
-  --v=2
-Restart=on-failure
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-EOF
+for instance in controller-0 controller-1 controller-2; do
+  vagrant upload scripts/k8s-the-hard-way/configure-k8s-controller-manager.sh /home/vagrant/configure-k8s-controller-manager.sh ${instance}
+  vagrant ssh ${instance} -c "cd /home/vagrant && chmod +x configure-k8s-controller-manager.sh && ./configure-k8s-controller-manager.sh"
+done

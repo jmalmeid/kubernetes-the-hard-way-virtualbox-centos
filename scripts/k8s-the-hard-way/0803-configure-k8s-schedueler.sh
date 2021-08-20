@@ -1,28 +1,6 @@
 #!/bin/bash
 
-sudo mv kube-scheduler.kubeconfig /var/lib/kubernetes/
-
-cat <<EOF | sudo tee /etc/kubernetes/config/kube-scheduler.yaml
-apiVersion: componentconfig/v1alpha1
-kind: KubeSchedulerConfiguration
-clientConnection:
-  kubeconfig: "/var/lib/kubernetes/kube-scheduler.kubeconfig"
-leaderElection:
-  leaderElect: true
-EOF
-
-cat <<EOF | sudo tee /etc/systemd/system/kube-scheduler.service
-[Unit]
-Description=Kubernetes Scheduler
-Documentation=https://github.com/kubernetes/kubernetes
-
-[Service]
-ExecStart=/usr/local/bin/kube-scheduler \\
-  --config=/etc/kubernetes/config/kube-scheduler.yaml \\
-  --v=2
-Restart=on-failure
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-EOF
+for instance in controller-0 controller-1 controller-2; do
+  vagrant upload scripts/k8s-the-hard-way/configure-k8s-schedueler.sh /home/vagrant/configure-k8s-schedueler.sh ${instance}
+  vagrant ssh ${instance} -c "cd /home/vagrant && chmod +x configure-k8s-schedueler.sh && ./configure-k8s-schedueler.sh"
+done
