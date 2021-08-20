@@ -19,7 +19,7 @@ The commands in this lab must be run on each controller instance: `controller-0`
 ```
 vagrant ssh controller-0
 sudo su -
-cd /home/vagrant
+cd /vagrant
 chown root:root *
 ```
 
