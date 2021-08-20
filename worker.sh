@@ -16,7 +16,11 @@ net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 
 # Apply sysctl params without reboot
-sudo sysctl --system§:x!
+sudo sysctl --system
+
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo rm -f /swapfile1
 
 yum -y install epel-release
 

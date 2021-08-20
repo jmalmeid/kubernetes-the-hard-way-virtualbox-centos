@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
       node.vm.provider "virtualbox" do |vb|
         vb.name = "controller-#{i}"
       end
-      node.vm.provision "shell", path: "heartbeat.sh"
+      node.vm.provision "shell", path: "controller.sh"
     end
   end
 

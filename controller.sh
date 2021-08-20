@@ -18,6 +18,10 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo rm -f /swapfile1
+
 yum -y install epel-release
 
 yum -y remove firewalld
