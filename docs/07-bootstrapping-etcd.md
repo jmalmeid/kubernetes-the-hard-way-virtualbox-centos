@@ -100,8 +100,6 @@ EOF
 
 ```
 {
-  iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 2380 -j ACCEPT
-  iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 2379 -j ACCEPT
   iptables-save > /etc/sysconfig/iptables
   sudo systemctl daemon-reload
   sudo systemctl enable etcd

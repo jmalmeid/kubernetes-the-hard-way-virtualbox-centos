@@ -17,6 +17,10 @@ iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3121 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21064 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 9929 -j ACCEPT
 iptables -I INPUT -p udp -m state --state NEW -m udp --dport 9929 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 6443 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 2380 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 2379 -j ACCEPT
 iptables -I INPUT -p igmp -j ACCEPT
 iptables -I INPUT -m addrtype --dst-type MULTICAST -j ACCEPT
 iptables-save > /etc/sysconfig/iptables
