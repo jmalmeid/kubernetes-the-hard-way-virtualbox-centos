@@ -60,11 +60,11 @@ Install the Kubernetes binaries:
 The instance internal IP address will be used to advertise the API Server to members of the cluster. Retrieve the internal IP address for the current compute instance:
 
 ```
-INTERNAL_IP=$(ip -4 --oneline addr | grep -v secondary | grep -v 192.168.100.100 | grep -oP '(192\.168\.100\.[0-9]{1,3})(?=/)')
+INTERNAL_IP=$(ip -4 --oneline addr | grep -v secondary | grep -oP '(10\.240\.0\.[0-9]{1,3})(?=/)')
 ```
 
 ```
-KUBERNETES_PUBLIC_ADDRESS="192.168.100.100"
+KUBERNETES_PUBLIC_ADDRESS="10.240.0.40"
 ```
 
 Create the `kube-apiserver.service` systemd unit file:
@@ -91,7 +91,7 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --etcd-cafile=/var/lib/kubernetes/ca.pem \\
   --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
   --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
-  --etcd-servers=https://192.168.100.10:2379,https://192.168.100.11:2379,https://192.168.100.12:2379 \\
+  --etcd-servers=https://10.240.0.10:2379,https://10.240.0.11:2379,https://10.240.0.12:2379 \\
   --event-ttl=1h \\
   --encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \\
   --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \\
@@ -132,7 +132,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/local/bin/kube-controller-manager \\
   --bind-address=0.0.0.0 \\
-  --cluster-cidr=192.168.100.0/24 \\
+  --cluster-cidr=10.200.100.0/16 \\
   --cluster-name=kubernetes \\
   --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \\
   --cluster-signing-key-file=/var/lib/kubernetes/ca-key.pem \\
