@@ -348,7 +348,7 @@ EOF
 Retrieve the `kubernetes-the-hard-way` static IP address:
 
 ```
-KUBERNETES_PUBLIC_ADDRESS="192.168.100.100"
+KUBERNETES_PUBLIC_ADDRESS="10.240.0.40"
 ```
 
 Make a HTTP request for the Kubernetes version info:
