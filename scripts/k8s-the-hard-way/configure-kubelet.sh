@@ -1,8 +1,8 @@
 #!/bin/bash
 
-sudo mv ${HOSTNAME}-key.pem ${HOSTNAME}.pem /var/lib/kubelet/
-sudo mv ${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
-sudo mv ca.pem /var/lib/kubernetes/
+sudo cp ${HOSTNAME}-key.pem ${HOSTNAME}.pem /var/lib/kubelet/
+sudo cp ${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
+sudo cp ca.pem /var/lib/kubernetes/
 
 INTERNAL_IP=$(ip -4 --oneline addr | grep -v secondary | grep -oP '(10\.240\.0\.[0-9]{1,3})(?=/)')
 
@@ -57,6 +57,7 @@ ExecStart=/usr/local/bin/kubelet \\
   --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \\
   --image-pull-progress-deadline=2m \\
   --kubeconfig=/var/lib/kubelet/kubeconfig \\
+  --resolv-conf=/run/NetworkManager/resolv.conf \\
   --network-plugin=cni \\
   --register-node=true \\
   --v=2
