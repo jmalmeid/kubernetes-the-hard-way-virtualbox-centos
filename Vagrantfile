@@ -21,7 +21,8 @@ Vagrant.configure("2") do |config|
         vb.name = "lb-0"
       end 
       c.vm.hostname = "lb-0"
-      c.vm.network "private_network", ip: "10.240.0.40"
+      c.vm.network "public_network", ip: "10.240.0.40"
+      c.vm.network "private_network", ip: "10.140.0.40"
 
       c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-haproxy.sh"
 
@@ -36,7 +37,8 @@ Vagrant.configure("2") do |config|
           vb.name = "controller-#{n}"
         end 
         c.vm.hostname = "controller-#{n}"
-        c.vm.network "private_network", ip: "10.240.0.1#{n}"
+        c.vm.network "public_network", ip: "10.240.0.1#{n}"
+        c.vm.network "private_network", ip: "10.140.0.1#{n}"
 
         c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-controller.sh"
     end
@@ -48,7 +50,8 @@ Vagrant.configure("2") do |config|
           vb.name = "worker-#{n}"
         end 
         c.vm.hostname = "worker-#{n}"
-        c.vm.network "private_network", ip: "10.240.0.2#{n}"
+        c.vm.network "public_network", ip: "10.240.0.2#{n}"
+        c.vm.network "private_network", ip: "10.140.0.2#{n}"
 
         c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-routes.sh"
         c.vm.provision :shell, :path => "scripts/bootstrap/vagrant-setup-worker.sh"

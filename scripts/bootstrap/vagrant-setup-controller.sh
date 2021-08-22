@@ -52,6 +52,11 @@ systemctl start iptables
 #Install support tools
 yum install -y net-tools bind-utils telnet tcpdump
 
+#For routing
+yum install NetworkManager-config-routing-rules -y
+systemctl enable NetworkManager-dispatcher.service
+systemctl start NetworkManager-dispatcher.service
+
 #iptables rules 
 iptables -I INPUT -p igmp -j ACCEPT
 iptables -I INPUT -m addrtype --dst-type MULTICAST -j ACCEPT
