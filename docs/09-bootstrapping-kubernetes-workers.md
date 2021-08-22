@@ -10,7 +10,6 @@ The commands in this lab must be run on each worker instance: `worker-0`, `worke
 vagrant ssh worker-0
 sudo su -
 cd /home/vagrant
-chown root:root *
 ```
 
 ### Running commands in parallel with tmux
@@ -93,7 +92,7 @@ Install the worker binaries:
 Retrieve the Pod CIDR range for the current compute instance:
 
 ```
-POD_CIDR="10.2[0,1,2].0.0/16"
+POD_CIDR="10.200.[0,1,2].0/24"
 ```
 
 Create the `bridge` network configuration file:
@@ -258,7 +257,7 @@ apiVersion: kubeproxy.config.k8s.io/v1alpha1
 clientConnection:
   kubeconfig: "/var/lib/kube-proxy/kubeconfig"
 mode: "iptables"
-clusterCIDR: "192.168.100.0/24"
+clusterCIDR: "10.200.0.0/16"
 EOF
 ```
 
