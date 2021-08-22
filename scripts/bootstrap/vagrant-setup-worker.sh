@@ -39,14 +39,18 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 sudo rm -f /swapfile1
 
-sudo yum -y install epel-release
+#To Permissive
+setenforce Permissive
+sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
 
-sudo yum -y remove firewalld
-sudo yum install -y iptables-services wget
-sudo yum -y install socat conntrack ipset
-
+yum -y install epel-release
+yum -y remove firewalld
+yum install -y iptables-services wget
 systemctl enable iptables
 systemctl start iptables
+
+#Install support tools
+yum install -y net-tools bind-utils telnet tcpdump
  
 #iptables rules
 iptables -I INPUT -p igmp -j ACCEPT

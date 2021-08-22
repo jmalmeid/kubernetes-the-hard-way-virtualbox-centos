@@ -7,11 +7,18 @@ cat <<EOF | sudo tee -a /etc/profile
 export PATH=$PATH:/usr/local/bin
 EOF
 
+#To Permissive
+setenforce Permissive
+sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
+
 yum -y install epel-release
 yum -y remove firewalld
 yum install -y iptables-services wget
 systemctl enable iptables
 systemctl start iptables
+
+#Install support tools
+yum install -y net-tools bind-utils telnet tcpdump
  
 #iptables rules
 iptables -I INPUT -p igmp -j ACCEPT
@@ -31,6 +38,8 @@ EOF
 sudo sysctl --system
 
 sudo yum install wget haproxy -y
+
+sudo yum install net-tools bind-utils telnet tcpdump -y
 
 sudo systemctl enable haproxy
 

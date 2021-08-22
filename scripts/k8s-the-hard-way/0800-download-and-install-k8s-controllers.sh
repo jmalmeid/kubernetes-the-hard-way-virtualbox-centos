@@ -11,7 +11,7 @@ for instance in controller-0 controller-1 controller-2; do
   vagrant upload kube-controller-manager /home/vagrant/kube-controller-manager ${instance}
   vagrant upload kube-scheduler /home/vagrant/kube-scheduler ${instance}
   vagrant upload kubectl /home/vagrant/kubectl ${instance}
-  vagrant ssh ${instance} -c "sudo mkdir -p /etc/kubernetes/config && cd /home/vagrant && chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl && sudo mv kube-apiserver kube-controller-manager kube-scheduler kubectl /usr/local/bin/"
+  vagrant ssh ${instance} -c "sudo mkdir -p /etc/kubernetes/config && cd /home/vagrant && sudo chown root: kube-apiserver kube-controller-manager kube-scheduler kubectl && chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl && sudo cp kube-apiserver kube-controller-manager kube-scheduler kubectl /usr/local/bin/. && chown -R root: /usr/local/bin/*"
 done
 
 rm -f kube-apiserver kube-controller-manager kube-scheduler kubectl
